@@ -1,8 +1,12 @@
 {
   "dependencies": {
+    "axios": "^1.8.2",
     "concurrently": "^9.1.2"
   },
   "scripts": {
     "dev": "concurrently -c \"blue,yellow\" -n \"CLIENT,SERVER\" \"npm --prefix ./client run dev\" \"npm --prefix ./server run dev\""
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }

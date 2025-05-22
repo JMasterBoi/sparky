@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chrono-node": "^2.8.0",
+    "date-fns": "^4.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-mentions": "^4.4.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
