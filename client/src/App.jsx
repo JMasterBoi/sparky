@@ -13,7 +13,6 @@ function App() {
       const response = await axios.get("/api/get-goals");
       setGoals(response.data);
       ret = response.data;
-      console.log("Goals loaded successfully:", response.data);
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
     }
@@ -52,8 +51,6 @@ function App() {
     // check if there are goals in local storage, if not set the first goal as current
     setCurrentGoalId(localStorage.getItem("currentGoalId")??goals[0]?._id);
   }, [goals]);
-
-  console.log("goals", goals);
 
   return <>
     {/* goal creator */}

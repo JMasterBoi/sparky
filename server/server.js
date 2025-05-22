@@ -80,13 +80,14 @@ app.post("/api/add-task", async (req, res) => {
 
 app.post("/api/check-task", async (req, res) => {
   // get goalId and task from request body
-  goalId = new ObjectId(req.body[0]);
-  taskId = new ObjectId(req.body[1]);
+  const goalId = new ObjectId(req.body.goalId);
+  const taskId = new ObjectId(req.body.taskId);
+  const status = req.body.status;
 
   // append task to goal's tasks array
   await goalsDB.updateOne(
     { _id: goalId },
-    { $set: { "tasks.$[task].checked": true } },
+    { $set: { "tasks.$[task].checked": !status } },
     { arrayFilters: [{ "task._id": taskId }] }
   ).then((result) => {
     console.log(result);
