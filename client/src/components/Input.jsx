@@ -4,6 +4,7 @@ import { MentionsInput, Mention } from 'react-mentions'
 import * as chrono from 'chrono-node';
 import { format } from 'date-fns';
 import ToggleSwitch from "./ToggleSwitch";
+import { successToast } from "./AlertService";
 
 function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
     const [rawTask, setRawTask] = useState("");
@@ -11,6 +12,20 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
     const [autoAssign, setAutoAssign] = useState(false);
     const inputRef = useRef(null); // used for focusing the input
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (
+                document.activeElement.tagName !== "INPUT" &&
+                document.activeElement.tagName !== "TEXTAREA" &&
+                event.key.length === 1 && event.key[0].match(/[a-z]/i)
+            ) {
+                inputRef.current?.focus();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
     useEffect(() => {
     if (goals && Array.isArray(goals)) {
             const formattedGoals = goals.map((goal) => ({
@@ -24,8 +39,6 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
     async function submitTask(e) {
         e.preventDefault();
 
-        console.log("rawTask", rawTask)
-
         // get id from mention
         const [fullGoalMatch, displayGoalMatch, idGoalMatch] = rawTask.match(/\/\[(.*?)\]\((.*?)\)/) || []; // if there is no match use empty array to prevent error
         
@@ -38,6 +51,11 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
         // check if currentGoalId is empty
         if (filteredTask === "") {
             console.log("Task cannot be empty");
+            return;
+        }
+        // if theres no goal
+        if (!currentGoalId || goals.length === 0) {
+            console.log("No goal selected, please select/create a goal first.");
             return;
         }
 
@@ -57,7 +75,7 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
             const response = await axios.post(`/api/add-task/`, data)
             reloadGoals();
             setRawTask("");
-            console.log("Task added successfully:");
+            successToast("Task added successfully!");
         } catch (error) {
             console.log("aww")
             console.error("Error:", error.response?.data || error.message);
@@ -132,10 +150,8 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
                     <Mention
                         trigger="@"
                         data={(search, callback) => {
-                            console.log('Search query:', rawTask); 
-
                             const fallback = [{id: chrono.parseDate("11:59PM").getTime(), display: "---"}] // when there is no match
-                            console.log(fallback)
+
                             try {
                                 const date = chrono.parseDate(search + " 11:59PM");
                                 if (date) {

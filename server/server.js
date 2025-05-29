@@ -85,11 +85,23 @@ app.delete("/api/delete-all-goals", async (req, res) => {
 });
 
 app.post("/api/create-goal", async (req, res) => {
-  const goal = {user:1, ...req.body, taskBank: [], taskSchedule: []};
+  const { goalName, goalDescription } = req.body;
+
+  if (!goalName) {
+    return res.status(400).json({ error: "Goal name is required." });
+  }
+
+  const goal = {
+    goalName: goalName,
+    goalDescription: goalDescription, // optional, can be empty ""
+    user:1,
+    taskBank: [],
+    taskSchedule: []
+  };
 
   await goalsDB.insertOne(goal).then((result) => {
     console.log(result);
-    res.sendStatus(201);
+    res.status(201).json({_id: result.insertedId.toString()}); // return the id of the newly created goal
   }).catch((error) => {
     console.log("Error:", error);
   });
@@ -105,8 +117,8 @@ app.post("/api/add-task", async (req, res) => {
     // assign priority and difficulty based on taskName and taskDescription
     // this is a placeholder for AI implementation, you can replace it with your own AI logic
     // for now, we will just assign random values
-    priority = assignPriorityAI(taskName, taskDescription);
-    difficulty = assignPriorityAI(taskName, taskDescription);
+    const assignedPriority = assignPriorityAI(taskName, taskDescription);
+    const assignedDifficulty = assignPriorityAI(taskName, taskDescription);
     console.log(`Assigned Priority: ${assignedPriority}, Assigned Difficulty: ${assignedDifficulty}`);
   }
 
@@ -117,13 +129,17 @@ app.post("/api/add-task", async (req, res) => {
     checked: false,
     priority: priority??4.5, // if theres no priority, set it to 4.5 (medium)
     difficulty: difficulty??4.5, // if theres no difficulty, set it to 4.5 (medium)
-    dueDate: dueDate??endOfToday().getTime(), // if theres no due date, set it to null
+    dueDate: dueDate??endOfToday().getTime(), // if theres no due date, set it to today
+    autoAssign: autoAssign // more of an internal flag
   };
+
+  //! console.log("task:", task);
+  //! return res.status(200)
 
   // append task to goal's tasks array
   await goalsDB.updateOne(
     { _id: goalId },
-    { $push: {tasks: task } }
+    { $push: {taskBank: task } }
   ).then((result) => {
     console.log(result);
     res.sendStatus(201);
@@ -141,7 +157,7 @@ app.post("/api/check-task", async (req, res) => {
   // append task to goal's tasks array
   await goalsDB.updateOne(
     { _id: goalId },
-    { $set: { "tasks.$[task].checked": !status } },
+    { $set: { "taskBank.$[task].checked": !status } },
     { arrayFilters: [{ "task._id": taskId }] }
   ).then((result) => {
     console.log(result);
@@ -158,7 +174,7 @@ app.delete("/api/delete-all-tasks", async (req, res) => {
   // append task to goal's tasks array
   await goalsDB.updateOne(
     { _id: goalId },
-    { $set: {tasks: [] } }
+    { $set: {taskBank: [] } }
   ).then((result) => {
     console.log(result);
     res.sendStatus(202);

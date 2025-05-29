@@ -3,18 +3,18 @@ import axios from "axios";
 import ContextMenu from "./ContextMenu";
 import { formatRelative } from "date-fns";
 
-function Task({_id, taskName, objective, goalId, checked, date }) {
+function Task({_id, taskName, objective, goalId, checked, dueDate }) {
     const [checkedState, setCheckedState] = useState(checked);
     const [relativeDate, setRelativeDate] = useState("");
     const taskOptionsRef = useRef(null);
     
     useEffect(() => {
         // format the date to a relative date
-        if (date) {
-            const formattedDate = formatRelative(new Date(Number(date)), new Date());
+        if (dueDate) {
+            const formattedDate = formatRelative(new Date(Number(dueDate)), new Date());
             setRelativeDate(formattedDate);
         }
-    }, [date]);
+    }, [dueDate]);
 
     function clickTask() {
         // change the ui to reflect the task being checked
@@ -70,7 +70,7 @@ function Task({_id, taskName, objective, goalId, checked, date }) {
                 <div className="circle">{checkedState?filled:empty}</div>
             </li>
             {/* the due date */}
-            {date && <div className="due-date">Due: {relativeDate}</div>}
+            {dueDate && <div className="due-date">Due: {relativeDate}</div>}
         </div>
     </div>
 }
