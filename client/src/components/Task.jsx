@@ -15,7 +15,7 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
             setRelativeDate(formattedDate);
         }
     }, [dueDate]);
-
+ 
     function clickTask() {
         // change the ui to reflect the task being checked
         setCheckedState(!checkedState);
