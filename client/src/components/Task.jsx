@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ContextMenu from "./ContextMenu";
-import { formatRelative } from "date-fns";
+import { formatRelative, set, sub, subDays, subHours } from "date-fns";
+import * as chrono from 'chrono-node';
 
 function Task({_id, taskName, objective, goalId, checked, dueDate }) {
     const [checkedState, setCheckedState] = useState(checked);
     const [relativeDate, setRelativeDate] = useState("");
+    const [taskUrgency, setTaskUrgency] = useState(0);
     const taskOptionsRef = useRef(null);
     
     useEffect(() => {
@@ -14,6 +16,9 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
             const formattedDate = formatRelative(new Date(Number(dueDate)), new Date());
             setRelativeDate(formattedDate);
         }
+
+        // calculate the urgency of the task
+        setTaskUrgency(calculateUrgency());
     }, [dueDate]);
  
     function clickTask() {
@@ -25,6 +30,24 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
         }).catch((error) => {
             console.log("Error:", error);
         });
+    }
+
+    function calculateUrgency() {
+        // calculate the urgency of the task based on the due date
+        if (!dueDate) return 0; // no urgency if no due date
+        // const daysLeft = (new Date(Number(dueDate)) - new Date())/86400000; // get the difference of days
+        const daysLeft = (chrono.parseDate("yesterday 11:59pm").getTime() - new Date())/86400000; // get the difference of days
+
+        console.log("Days left:", daysLeft);
+        if (daysLeft <= 0) {
+            return 3; // critical
+        } else if (daysLeft <= 2) {
+            return 2; // soon
+        } else if (daysLeft <= 7) {
+            return 1; // later
+        } else {
+            return 0; // no urgency
+        }
     }
 
     const empty = <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"/></svg>;
@@ -53,8 +76,8 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
             },
             color: "red"
         }
-    ] 
-
+    ]
+    
     // when the user hovers over the task, show the 3 dots
     return <div className="task-container" onClick={(e) => clickTask()} onMouseEnter={() => {taskOptionsRef.current.style.visibility = "visible";}} onMouseLeave={() => {taskOptionsRef.current.style.visibility = "hidden";}}>
         <ContextMenu openRef={taskOptionsRef} options={menuOptions} />
@@ -70,7 +93,7 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
                 <div className="circle">{checkedState?filled:empty}</div>
             </li>
             {/* the due date */}
-            {dueDate && <div className="due-date">Due: {relativeDate}</div>}
+            {dueDate && <div className={`due-date urgency-${taskUrgency}`}>Due: {relativeDate}</div>}
         </div>
     </div>
 }

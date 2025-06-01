@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 :root {
-  --text: #f4efff;
+  /* --text: #f4efff;
   --faded-text: #757575;
   --background: #24222C;
   --primary: #AB9FF2;
@@ -9,15 +9,25 @@
   --accent: #988080;
   --gray: #454550;
   --gray-highlight: #52525d;
+
+  --low-urgency: #3fac6bee;
+  --medium-urgency: #e5cc7cee;
+  --high-urgency: #d88034ee;
+  --critical-urgency: #c05c5cee; */
+  
   
   /* :3 Audrey's theme  */
-  /* --text: #150a14;
-  --background: #80456e;
-  --primary: #d15ac1;
-  --secondary: #924289;
+  --text: #150a14;
+  --background: #fa93ba;
+  --primary: #e8abc3;
+  --secondary: #a1a1c3;
   --accent: #d771c9;
-  --gray: #e274c7;
-  --gray-highlight: #ffeffc; */
+  --gray: #eeb5db;
+  --gray-highlight: #dd9ad1;
+  --low-urgency: #3fac6bee;
+  --medium-urgency: #e5cc7cee;
+  --high-urgency: #d88034ee;
+  --critical-urgency: #435270ee;
   
   
   --border-radius: 12px;
@@ -53,6 +63,11 @@ h4 {font-size: 1.777rem; /* 28.48px */}
 h5 {font-size: 1.333rem; /* 21.28px */}
 small {font-size: 0.750rem; /* 12px */}
 .header {font-size: 18px; font-weight: bold;}
+
+/* :3 Audrey Sticker */
+#stickers {
+  position: absolute;
+}
 
 a {
   font-weight: 500;
@@ -223,7 +238,18 @@ button:focus-visible {
 
 .due-date {
   text-indent: 2em;
-  color: rgb(194, 63, 63);
+}
+.urgency-0 {
+  color: var(--low-urgency);
+}
+.urgency-1 {
+  color: var(--medium-urgency);
+}
+.urgency-2 {
+  color: var(--high-urgency);
+}
+.urgency-3 {
+  color: var(--critical-urgency);
 }
 
 .circle {

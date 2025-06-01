@@ -24,7 +24,9 @@ const toast = mySwal.mixin({
 export const successToast = (title = 'Success!') => {
   toast.fire({
     icon: 'success',
-    title
+    title,
+    // :3 Audrey's theme 
+    iconColor: '#d16d9d',
   });
 };
 export const errorToast = (title = 'Error!') => {
