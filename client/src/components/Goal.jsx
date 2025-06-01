@@ -9,7 +9,7 @@ function Goal({ taskBank, reloadGoals, goalName, currentGoalId, _id}) {
         <ul onMouseDown={(e) => {e.stopPropagation()}} className="task-list">
             {/* list of tasks */}
             {taskBank && taskBank.map((task) => {
-                return <Task {...task} key={task._id} goalId={_id}/>
+                return <Task {...task} key={task._id} goalId={_id} reloadGoals={reloadGoals} />
             })}
         </ul>
         {/* placeholder */}

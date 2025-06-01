@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 :root {
-  /* --text: #f4efff;
+  --text: #f4efff;
   --faded-text: #757575;
   --background: #24222C;
   --primary: #AB9FF2;
@@ -12,12 +12,12 @@
 
   --low-urgency: #3fac6bee;
   --medium-urgency: #e5cc7cee;
-  --high-urgency: #d88034ee;
-  --critical-urgency: #c05c5cee; */
+  --high-urgency: #e36213ee;
+  --critical-urgency: #dd2323ee;
   
   
   /* :3 Audrey's theme  */
-  --text: #150a14;
+  /* --text: #150a14;
   --background: #fa93ba;
   --primary: #e8abc3;
   --secondary: #a1a1c3;
@@ -27,7 +27,7 @@
   --low-urgency: #3fac6bee;
   --medium-urgency: #e5cc7cee;
   --high-urgency: #d88034ee;
-  --critical-urgency: #435270ee;
+  --critical-urgency: #435270ee; */
   
   
   --border-radius: 12px;

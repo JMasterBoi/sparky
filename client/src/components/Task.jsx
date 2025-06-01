@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import ContextMenu from "./ContextMenu";
-import { formatRelative, set, sub, subDays, subHours } from "date-fns";
-import * as chrono from 'chrono-node';
+import { successToast } from "./AlertService";
+import axios from "axios";
+import { formatRelative, isSameDay } from "date-fns";
 
-function Task({_id, taskName, objective, goalId, checked, dueDate }) {
+function Task({_id, taskName, objective, goalId, checked, dueDate, reloadGoals }) {
     const [checkedState, setCheckedState] = useState(checked);
     const [relativeDate, setRelativeDate] = useState("");
     const [taskUrgency, setTaskUrgency] = useState(0);
@@ -35,18 +35,19 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
     function calculateUrgency() {
         // calculate the urgency of the task based on the due date
         if (!dueDate) return 0; // no urgency if no due date
-        // const daysLeft = (new Date(Number(dueDate)) - new Date())/86400000; // get the difference of days
-        const daysLeft = (chrono.parseDate("yesterday 11:59pm").getTime() - new Date())/86400000; // get the difference of days
+        // const dueDateObj = chrono.parseDate("1:59 am").getTime(); // for testing purposes, replace with actual due date
+        const dueDateObj = new Date(Number(dueDate));
+        const today = new Date().getTime(); // get today's date in milliseconds
+        const msLeft = dueDateObj - today; // get the difference of milliseconds
 
-        console.log("Days left:", daysLeft);
-        if (daysLeft <= 0) {
+        if (msLeft <= 300000) { // 5 minutes
             return 3; // critical
-        } else if (daysLeft <= 2) {
-            return 2; // soon
-        } else if (daysLeft <= 7) {
-            return 1; // later
+        } else if (msLeft <= 3600000) {
+            return 2; // in 1 hour
+        } else if (isSameDay(dueDateObj, today)) {
+            return 1; // its just today
         } else {
-            return 0; // no urgency
+            return 0; // not today
         }
     }
 
@@ -72,7 +73,12 @@ function Task({_id, taskName, objective, goalId, checked, dueDate }) {
             name: "Delete Task",
             action: () => {
                 // handle delete task
-                console.log("Delete Task clicked");
+                axios.post("/api/delete-task", {goalId: goalId, taskId: _id}).then((result) => {
+                    successToast("Task deleted successfully");
+                    reloadGoals();
+                }).catch((error) => {
+                    console.log("Error:", error);
+                });
             },
             color: "red"
         }

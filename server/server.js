@@ -167,6 +167,23 @@ app.post("/api/check-task", async (req, res) => {
   });
 });
 
+app.post("/api/delete-task", async (req, res) => {
+  // get goalId and task from request body
+  const goalId = new ObjectId(req.body.goalId);
+  const taskId = new ObjectId(req.body.taskId);
+
+  // append task to goal's tasks array
+  await goalsDB.updateOne(
+    { _id: goalId },
+    { $pull: { taskBank: { _id: taskId } } }
+  ).then((result) => {
+    console.log(result);
+    res.sendStatus(202);
+  }).catch((error) => {
+    console.log("Error:", error);
+  });
+});
+
 app.delete("/api/delete-all-tasks", async (req, res) => {
   // get goalId and task from request body
   goalId = new ObjectId(req.body.id);

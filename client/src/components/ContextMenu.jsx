@@ -9,10 +9,9 @@ function ContextMenu({ openRef, options }) {
     useEffect(() => {
         if (!openRef.current) return;
         const handleClick = (e) => {
-            console.log("open the context menu");
+            // open the context menu
             setMenuOpen(prev => !prev);
             e.stopPropagation();
-            // setListenerAdded(true);
         }
 
         const button = openRef.current;
@@ -24,7 +23,6 @@ function ContextMenu({ openRef, options }) {
     }, [openRef]);
 
     useEffect(() => {
-        console.log("menuOpen", menuOpen);
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setMenuOpen(false);

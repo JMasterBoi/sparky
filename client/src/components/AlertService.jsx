@@ -26,7 +26,7 @@ export const successToast = (title = 'Success!') => {
     icon: 'success',
     title,
     // :3 Audrey's theme 
-    iconColor: '#d16d9d',
+    // iconColor: '#d16d9d',
   });
 };
 export const errorToast = (title = 'Error!') => {

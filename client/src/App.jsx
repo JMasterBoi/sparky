@@ -6,13 +6,12 @@ function App() {
   return <>
     <div id="stickers">
       {/* :3 audrey's stickers */}
-      <Sticker src="vaportrail.png" size="100px" left="30vw" top="5vh" />
+      {/* <Sticker src="vaportrail.png" size="100px" left="30vw" top="5vh" />
       <Sticker src="hellokitty-strawberry.png" size="100px" left="10vw" top="75vh" />
       <Sticker src="cheetah-heart.png" size="145px" left="89vw" top="35vh" />
       <Sticker src="cherry-blossom.png" size="175px" left="90vw" top="-1.5vh" rotate="180deg" />
       <Sticker src="apple.png" size="100px" left="50vw" top="50vh" rotate="20deg" />
-      <Sticker src="cross.png" size="200px" left="70vw" top="50vh" />
-      {/* <img src="src/assets/Audrey 💖/border.png" alt="border" width={window.innerWidth} height={window.innerHeight} /> */}
+      <Sticker src="cross.png" size="200px" left="70vw" top="50vh" /> */}
     </div>
     <Router>
       <nav>
