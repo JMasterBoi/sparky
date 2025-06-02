@@ -84,6 +84,19 @@ app.delete("/api/delete-all-goals", async (req, res) => {
   }
 });
 
+app.delete("/api/delete-goal", async (req, res) => {
+  // get goalId from request body
+  const goalId = new ObjectId(req.body.goalId);
+
+  // delete goal from database
+  await goalsDB.deleteOne({ _id: goalId }).then((result) => {
+    console.log(result);
+    res.sendStatus(202);
+  }).catch((error) => {
+    console.log("Error:", error);
+  });
+});
+
 app.post("/api/create-goal", async (req, res) => {
   const { goalName, goalDescription } = req.body;
 

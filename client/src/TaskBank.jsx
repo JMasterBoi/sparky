@@ -5,22 +5,8 @@ import Goal from "./components/Goal";
 import CreateGoal from "./components/CreateGoal";
 import { errorToast, successToast } from "./components/AlertService";
 
-export function TaskBank() {
-  const [goals, setGoals] = useState([]);
+export function TaskBank({ goals, setGoals, reloadGoals }) {
   const [currentGoalId, setCurrentGoalId] = useState(null);
-
-  async function reloadGoals() {
-    let ret = []
-    try {
-      const response = await axios.get("/api/get-goals");
-      setGoals(response.data);
-      ret = response.data;
-    } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-    }
-    return ret;
-  }
-
 
   //! CREATE GOAL LOGIC
   const [goalName, setGoalName] = useState("");
@@ -50,12 +36,6 @@ export function TaskBank() {
   }
   //! CREATE GOAL LOGIC
 
-  // runs when the app loads
-  useEffect(() => {
-    (async () => { // async has to be inside the effect (IIFE)
-      const ret = await reloadGoals();
-    })();
-  }, [])
   // runs when goals change
   useEffect(() => {
     // check if there are goals in local storage, if not set the first goal as current

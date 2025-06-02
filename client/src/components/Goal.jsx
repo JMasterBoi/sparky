@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import Task from "./Task";
-
+import ContextMenu from "./ContextMenu";
+import { areYouSure, successToast } from "./AlertService";
 
 function Goal({ taskBank, reloadGoals, goalName, currentGoalId, _id}) {
-
     return <section className="goal" id={String(currentGoalId==_id && "current-goal")} onMouseDown={() => {localStorage.setItem("currentGoalId", _id); reloadGoals() }}>
         <p className="header">{goalName}</p>
         <ul onMouseDown={(e) => {e.stopPropagation()}} className="task-list">

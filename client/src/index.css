@@ -69,6 +69,12 @@ small {font-size: 0.750rem; /* 12px */}
   position: absolute;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -211,6 +217,11 @@ button:focus-visible {
   width: auto;
   /* z-index: 10; */
 }
+.goal-options {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
 .context-menu {
   position: fixed;
@@ -219,7 +230,7 @@ button:focus-visible {
   border-radius: var(--border-radius);
   border: 1px dashed var(--accent);
   padding-inline-start: 0;
-  /* z-index: 11; */
+  cursor: pointer;
 }
 .menu-option {
   padding: 12px;

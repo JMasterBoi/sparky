@@ -85,7 +85,7 @@ function Task({_id, taskName, objective, goalId, checked, dueDate, reloadGoals }
     ]
     
     // when the user hovers over the task, show the 3 dots
-    return <div className="task-container" onClick={(e) => clickTask()} onMouseEnter={() => {taskOptionsRef.current.style.visibility = "visible";}} onMouseLeave={() => {taskOptionsRef.current.style.visibility = "hidden";}}>
+    return <div className="task-container" onClick={(e) => clickTask()} onMouseEnter={(e) => {e.stopPropagation(); taskOptionsRef.current.style.visibility = "visible";}} onMouseLeave={() => {taskOptionsRef.current.style.visibility = "hidden";}}>
         <ContextMenu openRef={taskOptionsRef} options={menuOptions} />
         {/* 3 dots */}
         <div ref={taskOptionsRef} onClick={(e) => e.stopPropagation()} className="task-options" style={{visibility: "hidden"}} >

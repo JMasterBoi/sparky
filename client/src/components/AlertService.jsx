@@ -89,3 +89,17 @@ export const createGoal = (reloadGoals) => {
   });
 };
 
+export const areYouSure = (text, then) => {
+  mySwal.fire({
+    title: "Are you sure?",
+    text: text,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes!",
+    cancelButtonText: "No, cancel!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      then()
+    }
+  });
+};
