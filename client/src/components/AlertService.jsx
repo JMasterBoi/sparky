@@ -64,6 +64,15 @@ export const createGoal = (reloadGoals) => {
     // showCancelButton: true,
     confirmButtonText: 'Add',
     focusConfirm: false,
+    didOpen: () => {
+      const input = document.getElementById('goalName');
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); // prevents newline in textareas if you attach to the whole popup
+          Swal.clickConfirm();
+        }
+      });
+    },
     preConfirm: () => {
       const goalName = document.getElementById('goalName').value;
       const goalDescription = document.getElementById('goalDescription').value;

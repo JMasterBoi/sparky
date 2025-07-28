@@ -4,7 +4,7 @@
     "concurrently": "^9.1.2"
   },
   "scripts": {
-    "dev": "concurrently -c \"blue,yellow\" -n \"CLIENT,SERVER\" \"npm --prefix ./client run dev\" \"npm --prefix ./server run dev\""
+    "dev": "concurrently -c \"blue,yellow\" -n \"CLIENT,SERVER\" \"npm --prefix ./client run dev\" \"npm --prefix ./server run dev\" \"start http://localhost:5173/\""
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

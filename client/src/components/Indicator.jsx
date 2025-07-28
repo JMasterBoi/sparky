@@ -1,0 +1,4 @@
+export function Indicator({ color="var(--primary)", size="10px", margin=0 }) {
+    // return <svg style={{padding:0, margin:margin}} color={color} xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24"><path style={{padding:0, margin:0}} fill="currentColor" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75s9.75-4.365 9.75-9.75S17.385 2.25 12 2.25"/></svg>
+    return <svg style={{padding:0, margin:margin}} color={color} width={size} height={size} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path style={{padding:0, margin:0}} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0"/></svg>
+}

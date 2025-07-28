@@ -40,7 +40,7 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
         e.preventDefault();
 
         // get id from mention
-        const [fullGoalMatch, displayGoalMatch, idGoalMatch] = rawTask.match(/\/\[(.*?)\]\((.*?)\)/) || []; // if there is no match use empty array to prevent error
+        const [fullGoalMatch, displayGoalMatch, idGoalMatch] = rawTask.match(/#\[(.*?)\]\((.*?)\)/) || []; // if there is no match use empty array to prevent error
         
         // get date from input
         const [fullDateMatch, displayDateMatch, idDateMatch] = rawTask.match(/@\[(.*?)\]\((.*?)\)/) || []; // same as above
@@ -139,9 +139,9 @@ function Input({ goals, reloadGoals, currentGoalId, setCurrentGoalId }) {
             <form id="task-form" onSubmit={submitTask} onClick={(e) => {inputRef?.current.focus();}}>
                 <MentionsInput placeholder="How will you achieve your goals today?" inputRef={inputRef} autoComplete="off" id="mentions-input" forceSuggestionsAboveCursor={true} allowSpaceInQuery singleLine autoFocus style={inputStyle} value={rawTask} onChange={(e) => setRawTask(e.target.value)}>
                     <Mention
-                        trigger="/"
+                        trigger="#"
                         data={mentionGoals}
-                        markup='/[__display__](__id__)'
+                        markup='#[__display__](__id__)'
                         displayTransform={(id, display) => display}
                         onAdd={(id, display) => {
                             localStorage.setItem("currentGoalId", id);

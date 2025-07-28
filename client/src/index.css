@@ -6,7 +6,8 @@
   --background: #24222C;
   --primary: #AB9FF2;
   --secondary: #3C315B;
-  --accent: #988080;
+  /* --accent: #988080; */
+  --accent: #e3b4e9;
   --gray: #454550;
   --gray-highlight: #52525d;
 
@@ -29,12 +30,12 @@
   --high-urgency: #d88034ee;
   --critical-urgency: #435270ee; */
   
-  
   --border-radius: 12px;
   --font: Roboto Mono;
   --container-height: 60%;
 
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-x: hidden;
 
 
   font-family: var(--font) !important;
@@ -62,7 +63,7 @@ h3 {font-size: 2.369rem; /* 37.92px */}
 h4 {font-size: 1.777rem; /* 28.48px */}
 h5 {font-size: 1.333rem; /* 21.28px */}
 small {font-size: 0.750rem; /* 12px */}
-.header {font-size: 18px; font-weight: bold;}
+.header {font-size: 18px; font-weight: bold; font-style: italic; display:flex; align-items: center;}
 
 /* :3 Audrey Sticker */
 #stickers {
@@ -113,6 +114,7 @@ body {
 }
 
 input[type="text"] {
+  font-family: inherit;
   /* width: 50%; */
   color: var(--text);
   padding: 12px 16px;
@@ -161,11 +163,8 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-color: var(--primary);
+  /* border-color: var(--accent); */
 }
 
 /* holds the tasks */
@@ -502,10 +501,9 @@ button:focus-visible {
 .unchecked-icon {
   transform: translateX(24px); /* adjust this value based on layout */
 }
-
 /*#endregion Toggle Switch */
 
-
+/*#region Nav */
 nav {
   /* background-color: var(--primary); */
   /* left: 0; */
@@ -522,6 +520,7 @@ nav {
   font-weight: normal;
   padding: 7px 12px;
   transition: color 0.3s ease;
+  border-radius: var(--border-radius);
 }
 .nav-link:hover {
   color: var(--primary);
@@ -533,5 +532,117 @@ nav {
   /* border-bottom: 2px solid var(--primary); */ 
   /*? option 2 */
   border: 2px solid var(--primary);
+}
+/*#endregion Nav */
+
+/*#region Schedule */
+
+.schedule-wrapper {
+  display: flex;
+  --entire-wrapper-margin: 10px;
+  margin-top: var(--entire-wrapper-margin);
+  /* overflow: hidden; */
+
+}
+
+.sidebar-container {
+  
+  text-align: left;
+  user-select: none;
+  --sidebar-margin: 0px;
+  margin: var(--sidebar-margin) 40px;
+  
+  --sidebar-vertical-padding: 20px;
+  padding: var(--sidebar-vertical-padding) 20px;
+  
+  /* width: 25vw; */
+
+  /*! change if you modify any padding or margins */
+  --sidebar-desired-margin: 20px;
+  height: calc(100vh - var(--sidebar-margin) - var(--sidebar-vertical-padding)*2 - var(--entire-wrapper-margin) - 74px - var(--sidebar-desired-margin)); /* height - sidebar margin - sidebar padding*2 - entire wrapper margin - entire nav height + distance from bottom */
+  
+  background-color: var(--gray);
+  border-radius: var(--border-radius);
+
+  overflow-y: auto;
+  /* position: sticky; */}
+
+.sidebar-goal {
+  /* margin-top: 0; */
+}
+.sidebar-task-bank {
+  margin-top: 5px;
+  padding-inline-start: 0px;
+}
+.sidebar-task {
+  padding: 1px 5px 1px 10px;
+  /* padding: 5px 8vw 5px 10px; */
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 5vw; */
+  width: 25vw;
+  /* max-width: 10vw !important; */
   border-radius: var(--border-radius);
 }
+.sidebar-task:hover {
+  background-color: var(--gray-highlight);
+}
+#schedule-task-btn {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  /* font-size: 80px; */
+  transform: scale(80%);
+  background-color: transparent;
+}
+
+.strikethrough {
+  position: relative;
+  display: inline-block;
+}
+.strikethrough::after {
+  content: "";
+  position: absolute;
+  top: 55%;
+  left: -0.25em;
+  right: -0.25em;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.schedule-container { /* to manage flex stuff */
+  overflow: scroll;
+  flex-grow: 1;
+  position: relative;
+}
+.inner-schedule-container { /* to manage the spacing for the schedule */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  /*! 0 = aligned up top; 40 = centered vertically */
+  margin: 0 40px; /* makes sure the schedule has space from the border */
+  box-sizing: border-box;
+}
+
+/*#endregion Schedule */
+
+/*#region Settings */
+.settings-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: var(--entire-wrapper-margin);
+  height: calc(100vh - var(--sidebar-margin) - var(--sidebar-vertical-padding)*2 - var(--entire-wrapper-margin) - 74px - var(--sidebar-desired-margin)); /* height - sidebar margin - sidebar padding*2 - entire wrapper margin - entire nav height + distance from bottom */
+}
+.main-settings-area {
+  flex-grow: 1;
+  background-color: var(--gray);
+  border-radius: var(--border-radius);
+
+}
+/*#endregion Settings */
